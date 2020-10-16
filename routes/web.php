@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('test');
+    return redirect()->route('business.index');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
