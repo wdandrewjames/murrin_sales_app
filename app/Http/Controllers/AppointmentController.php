@@ -10,7 +10,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $data = [
-            'breadcrumbs_links' => ['Businesses' => 'business.index', 'Appointments' => 'appointments.index'],
+            'breadcrumbs_links' => ['Businesses' => route('business.index'), 'Appointments' => route('appointments.index')],
             'appointments' => Appointment::where('complete', false)->get(),
         ];
 
