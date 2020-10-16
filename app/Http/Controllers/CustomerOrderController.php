@@ -39,6 +39,7 @@ class CustomerOrderController extends Controller
         // make sure customer has the status of a current customer if they have made an order.
         if (! $customer->isCurrent()) {
             $customer->makeCurrent();
+            $customer->save();
         }
         return redirect()->route('customer.show', $customer);
     }
