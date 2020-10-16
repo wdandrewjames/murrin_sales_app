@@ -9,6 +9,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
             <div class=" ml-auto flex">
+                <a href="{{ route('business.order.index', $business) }}" class="btn btn-primary mr-3 mb-4 inline-block font-semibold">View Orders</a>
                 <a href="{{ route('customer.create', $business) }}" class="btn btn-primary mr-3 mb-4 inline-block font-semibold">Add Customer</a>
                 <a href="{{ route('summary.index', $business) }}" class="btn btn-primary mr-3 mb-4 inline-block font-semibold">View Summary</a>
             </div>
