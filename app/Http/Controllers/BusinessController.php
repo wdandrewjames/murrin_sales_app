@@ -11,7 +11,7 @@ class BusinessController extends Controller
     {
         $data = [
             'breadcrumbs_links' => ['Businesses' => route('business.index')],
-            'businesses' => Business::paginate(10),
+            'businesses' => Business::orderBy('name')->paginate(10),
         ];
         return view('business.index', $data);
     }
@@ -20,7 +20,7 @@ class BusinessController extends Controller
     {
         $data = [
             'business' => $business,
-            'customers' => $business->customers()->paginate(10),
+            'customers' => $business->customers()->orderBy('name')->paginate(10),
             'breadcrumbs_links' => ['Businesses' => route('business.index'), $business->name => route('business.show', $business)],
         ];
 

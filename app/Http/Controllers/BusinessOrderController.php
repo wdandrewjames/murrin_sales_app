@@ -11,7 +11,7 @@ class BusinessOrderController extends Controller
     {
         $data = [
             'business' => $business,
-            'orders' => $business->orders()->paginate(10),
+            'orders' => $business->orders()->orderBy('invoice_date', 'desc')->paginate(10),
             'orders_total' => number_format($business->orders()->sum('amount') / 100, 2),
             'orders_average' => number_format(round($business->orders()->avg('amount') / 100, 2), 2),
         ];
