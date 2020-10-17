@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
     <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
-    <div class="py-12">
+    <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
             <div class=" ml-auto flex">
                 <a href="{{ route('business.order.index', $business) }}" class="btn btn-primary mr-3 mb-4 inline-block font-semibold">View Orders</a>

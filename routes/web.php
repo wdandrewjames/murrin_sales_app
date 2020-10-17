@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\BusinessOrderController;
 use App\Http\Controllers\CustomerAppointmentsController;
+use App\Http\Controllers\CustomerNoteController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
 use App\Http\Controllers\StatusController;
@@ -72,3 +73,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/customers/{customer}/orde
 // customer appointments
 Route::middleware(['auth:sanctum', 'verified'])->get('/customers/{customer}/appointments/create', [CustomerAppointmentsController::class, 'create'])->name('customers.appointment.create');
 Route::middleware(['auth:sanctum', 'verified'])->post('/customers/{customer}/appointments', [CustomerAppointmentsController::class, 'store'])->name('customers.appointment.store');
+
+// customer notes
+Route::middleware(['auth:sanctum', 'verified'])->get('/customers/{customer}/notes', [CustomerNoteController::class, 'index'])->name('customers.note.index');
