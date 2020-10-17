@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('summary:create')->lastDayOfMonth('23:55');
+        $schedule->command('summary:create')->everyFiveMinutes('23:55');
+        $schedule->command('send_appointment:email')->everyFiveMinutes();
     }
 
     /**
