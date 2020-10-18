@@ -8,7 +8,6 @@
                 </h2>
                 <div class="text-sm text-gray-500">{{ $customer->name }}</div>
             </div>
-            <a class="btn btn-primary ml-auto items-center flex">Create Order</a>
         </div>
 
     </x-slot>
