@@ -76,3 +76,4 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/customers/{customer}/app
 
 // customer notes
 Route::middleware(['auth:sanctum', 'verified'])->get('/customers/{customer}/notes', [CustomerNoteController::class, 'index'])->name('customers.note.index');
+Route::middleware(['auth:sanctum', 'verified'])->post('/customers/{customer}/notes', [CustomerNoteController::class, 'store'])->name('customers.note.store');

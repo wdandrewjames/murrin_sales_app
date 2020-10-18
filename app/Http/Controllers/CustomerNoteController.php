@@ -24,21 +24,18 @@ class CustomerNoteController extends Controller
         return view('customer.notes.index', $data);
     }
     
-    public function create(Customer $customer)
-    {
-        $data = [
-            'notes' => $customer->notes()->paginate(10),
-        ];
-
-        return view('customer.notes.index', $data);
-    }
 
     public function store(Customer $customer)
     {
-        $data = [
-            'notes' => $customer->notes()->paginate(10),
-        ];
+        $validatedData = request()->validate([
+            'content' => 'required',
+        ]);
 
-        return view('customer.notes.index', $data);
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['customer_id'] = $customer->id;
+
+        Note::create($validatedData);
+
+        return redirect()->route('customers.note.index', $customer);
     }
 }
