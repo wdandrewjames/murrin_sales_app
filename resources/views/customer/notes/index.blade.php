@@ -18,7 +18,7 @@
                 <div class="space-y-5">
                     <h4 class="text-xl text-gray-600 mb-2 pl-2">Add Note</h4>
                     {{-- edd notes --}}
-                    <form action="#" method="POST" class="space-y-2">
+                    <form action="{{ route('customers.note.store', $customer) }}" method="POST" class="space-y-2">
                         @csrf
                         <textarea name="content" id="content" rows="4" class="w-full border rounded-lg shadow-sm p-4"></textarea>
                         <button type="submit" class="btn btn-primary">Save</button>
