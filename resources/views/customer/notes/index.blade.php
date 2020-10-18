@@ -9,24 +9,24 @@
                 <div class="text-sm text-gray-500">{{ $customer->name }}</div>
             </div>
         </div>
-
     </x-slot>
 
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 
-                {{-- notes --}}
                 <div class="space-y-5">
                     <h4 class="text-xl text-gray-600 mb-2 pl-2">Add Note</h4>
+                    {{-- edd notes --}}
                     <form action="#" method="POST" class="space-y-2">
                         @csrf
-                        <textarea name="content" id="content" rows="4" class="w-full border rounded-lg shadow-sm"></textarea>
+                        <textarea name="content" id="content" rows="4" class="w-full border rounded-lg shadow-sm p-4"></textarea>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                     
                     <h4 class="text-xl text-gray-600 mb-2 pl-2">Notes for {{ $customer->name }}</h4>
                     
+                    {{-- display notes --}}
                     @foreach ($notes as $note)
                         <div class="border rounded-lg px-6 py-3">
                             <div class="text-md leading-5 text-gray-900">{{ $note->content }}</div>
@@ -41,6 +41,4 @@
             </div>
         </div>
     </div>
-
-
 </x-app-layout>
