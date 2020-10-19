@@ -11,8 +11,8 @@ class BusinessController extends Controller
     {
         $data = [
             'breadcrumbs_links' => ['Businesses' => route('business.index')],
-            'businesses' => Business::orderBy('name')->paginate(10),
         ];
+        
         return view('business.index', $data);
     }
 
