@@ -14,6 +14,6 @@ class BusinessTable extends Component
 
     public function render()
     {
-        return view('livewire.business-table', ['businesses' => Business::search('name', $this->search)->orderBy('name')->paginate(3)]);
+        return view('livewire.business-table', ['businesses' => Business::search('name', $this->search)->orderBy('name')->paginate(10)]);
     }
 }
