@@ -20,17 +20,26 @@
                     </x-slot>
 
                     <x-slot name="body">
-                        @foreach ($counts as $status => $values)
+                        @foreach ($summaries as $statusId => $values)
                             <x-row>
                                 <td class="px-6 py-4 whitespace-no-wrap flex items-center">
-                                    <div class="rounded-full h-4 w-4 border-{{ \App\Models\Status::find($status)->color }}-800 mr-2 bg-{{ \App\Models\Status::find($status)->color }}-500"></div>
-                                    {{ \App\Models\Status::find($status)->name }}
+                                    <div class="rounded-full h-4 w-4 border-{{ $status[$statusId]['color'] }}-800 mr-2 bg-{{ $status[$statusId]['color'] }}-500"></div>
+                                    {{ $status[$statusId]['name'] }}
                                 </td>
                                 @foreach ($values as $count)
-                                <td class="px-6 py-4 whitespace-no-wrap">{{ $count->count }}</td>
+                                    <td class="px-6 py-4 whitespace-no-wrap">{{ $count->count }}</td>
                                 @endforeach
                             </x-row>
                         @endforeach
+                        <x-row class="font-bold">
+                            <td class="px-6 py-4 whitespace-no-wrap flex items-center bg-gray-100">
+                                <div class="rounded-full h-4 w-4 mr-2 bg-white-500"></div>
+                                Total
+                            </td>
+                            @foreach ($dates as $date => $count)
+                                <td class="px-6 py-4 bg-gray-100 whitespace-no-wrap">{{ $count }}</td>
+                            @endforeach
+                        </x-row>
                     </x-slot>
                 </x-table>
             </div>
