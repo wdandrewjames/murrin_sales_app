@@ -41,6 +41,6 @@ class SendAppointmentEmail extends Command
     public function handle()
     {
         $appointments = Appointment::where('complete', 0)->get();
-        Mail::to('aj.rushton@icloud.com')->send(new CustomerAppointments($appointments));
+        Mail::to('markmurrin@mail.com')->send(new CustomerAppointments($appointments));
     }
 }
