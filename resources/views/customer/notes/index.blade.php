@@ -23,6 +23,16 @@
                         <textarea name="content" id="content" rows="4" class="w-full border rounded-lg shadow-sm p-4"></textarea>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
+
+                    @if ($errors->any())
+                        <div class="bg-red-200 border-red-500 text-red-900 rounded-lg p-4">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     
                     <h4 class="text-xl text-gray-600 mb-2 pl-2">Notes for {{ $customer->name }}</h4>
                     

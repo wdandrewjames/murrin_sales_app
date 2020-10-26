@@ -26,7 +26,7 @@ class CustomerAppointmentsController extends Controller
     public function store(Customer $customer)
     {
         $validatedData = request()->validate([
-            'start' => 'required|date_format:d/m/Y H:i',
+            'start' => 'required',
         ]);
 
         $validatedData['customer_id'] = $customer->id;

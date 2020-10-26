@@ -28,7 +28,7 @@
                                                 <div class="flex flex-col lg:mx-2">
                                                     <label for="start" class="label">Appointment Date and Time</label>
                                                     <input type="datetime-local" name="start" id="start" class="input" value="{{ old('start') }}"
-                                                        placeholder="dd/mm/yyyy hh:mm" autofocus>
+                                                        placeholder="" autofocus>
                                                     <span class="text-xs text-red-600 my-1"></span>
                                                 </div>
                                                 
@@ -38,6 +38,15 @@
                                                 Create Appointment
                                             </button>
                                             
+                                            @if ($errors->any())
+                                                <div class="bg-red-200 border-red-500 text-red-900 rounded-lg p-4">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
                                         </div>
                                     </form>
                                 </div>

@@ -19,7 +19,16 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 {{-- orders --}}
                 <div class="my-6">
-                    <h4 class="text-xl text-gray-600 mb-2 pl-2">Orders for {{ $business->name }}</h4>
+                    <div class="block md-flex  mb-2">
+                        <h4 class="text-xl text-gray-600 mb-2 pl-2">Orders for {{ $business->name }}</h4>
+                        <div class="ml-auto">
+                            <form class="flex flex-wrap md:space-x-2">
+                                <input type="datetime-local" name="start" class="input w-2/5 md:w-auto mr-2" value="{{ request()->get('start') }}">
+                                <input type="datetime-local" name="end" class="input w-2/5 md:w-auto" value="{{ request()->get('end') }}">
+                                <button class="btn btn-primary m-2 md:ml-0">Search</button>
+                            </form>
+                        </div>
+                    </div>
                     <x-table class="">
                         <x-slot name="head">
                             <x-head>Date</x-head>

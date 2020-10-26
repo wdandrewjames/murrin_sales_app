@@ -98,7 +98,18 @@
                                             </div>
 
                                             <button type="submit" class="btn btn-primary w-full md:w-auto mx-2 my-4">Add
-                                                Customer</button>
+                                                Customer
+                                            </button>
+
+                                            @if ($errors->any())
+                                                <div class="bg-red-200 border-red-500 text-red-900 rounded-lg p-4">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
                                         </div>
                                     </form>
                                 </div>

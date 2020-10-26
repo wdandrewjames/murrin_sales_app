@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout >
 
     <x-slot name="header">
         <div class="flex">
@@ -17,8 +17,8 @@
     </x-slot>
     <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col">
-            <div class="flex items-center flex-wrap rounded-lg bg-white shadow mt-2 p-3 mb-4">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex flex-col">
+            <div class="flex items-center flex-wrap rounded-lg bg-white shadow-lg md:shadow mt-2 p-3 mb-4">
                 <div class="">
                     <form action="{{ route('status.update', $customer) }}" method="POST">
                         @csrf
@@ -33,13 +33,21 @@
                 </div>
 
                 
-                <div class="flex ml-2 mt-2 sm:mt-0 md:ml-auto items-center justify-center ">
+                <div class="hidden md:flex ml-2 mt-2 sm:mt-0 md:ml-auto items-center justify-center ">
                     <a href="{{ route('customers.order.create', $customer) }}" class="btn btn-primary mr-3 inline-block font-semibold">Create Order</a>
                     <a href="{{ route('customers.appointment.create', $customer) }}" class="btn btn-primary mr-3 inline-block font-semibold">Make Appointment</a>
                     <a href="{{ route('customers.note.index', $customer) }}" class="btn btn-primary mr-3 inline-block font-semibold">Notes</a>
                 </div>
+                <div class="relative top-0 md:hidden ml-auto">
+                    <div x-on:click="buttonOpen = ! buttonOpen" class="btn btn-primary">Action</div>
+                    <div x-cloak x-show="buttonOpen"class="bg-white mt-3 text-gray-800 rounded-lg absolute overflow-hidden shadow-md right-0 z-20 w-32 border-gray-300 border-1">
+                        <a class="block border-b p-2 hover:bg-indigo-200" href="{{ route('customers.order.create', $customer) }}">Create Order</a>
+                        <a class="block border-b p-2 hover:bg-indigo-200" href="{{ route('customers.appointment.create', $customer) }}">Make Appointment</a>
+                        <a class="block border-b p-2 hover:bg-indigo-200" href="{{ route('customers.note.index', $customer) }}">Notes</a>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg lg:p-6">
                 {{-- orders --}}
                 <div class="my-6">
                     <h4 class="text-xl text-gray-600 mb-2 pl-2">Orders for {{ $customer->name }}</h4>
