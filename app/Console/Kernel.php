@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('summary:create')->lastDayOfMonth('23:55');
+        $schedule->command('summary:create')->weeklyOn(5, '08:00');
         $schedule->command('send_appointment:email')->weeklyOn(5, '08:00');
     }
 

@@ -12,10 +12,24 @@ class SummaryController extends Controller
     public function index(Business $business)
     {
         // get initial data
+        // setting each date to last day of month, as will be easier to group by month
         $summaries = Summary::where([
             ['business_id', '=', $business->id],
             ['date', '>', now()->subYear()],
-        ])->get()->sortByDesc('date');
+        ])
+        ->get()
+        ->map(function($item, $key) {
+            $date = new \DateTime($item->date); 
+            
+            return [
+                'id' => $item->id,
+                'business_id' => $item->business_id,
+                'status_id' => $item->status_id,
+                'count' => $item->count,
+                'date' => $date->format( 'Y-m' ),
+            ];
+        })
+        ->sortByDesc('date');
         
         // get dates and totals
         $dates = $summaries->groupBy('date')
@@ -29,7 +43,7 @@ class SummaryController extends Controller
         $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
             return $item->sortByDesc('date');
         });
-
+        // dd($summaries);
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {
             return [$status->id => ['color' => $status->color, 'name' => $status->name]];

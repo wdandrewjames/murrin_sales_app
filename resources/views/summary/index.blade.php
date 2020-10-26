@@ -27,7 +27,7 @@
                                     {{ $status[$statusId]['name'] }}
                                 </td>
                                 @foreach ($values as $count)
-                                    <td class="px-6 py-4 whitespace-no-wrap">{{ $count->count }}</td>
+                                    <td class="px-6 py-4 whitespace-no-wrap">{{ $count['count'] }}</td>
                                 @endforeach
                             </x-row>
                         @endforeach
