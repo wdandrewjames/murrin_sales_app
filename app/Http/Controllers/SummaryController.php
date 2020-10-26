@@ -12,7 +12,7 @@ class SummaryController extends Controller
     public function index(Business $business)
     {
         // get initial data
-        // setting each date to last day of month, as will be easier to group by month
+        // remove day from date so dates are grouped by month
         $summaries = Summary::where([
             ['business_id', '=', $business->id],
             ['date', '>', now()->subYear()],
@@ -43,7 +43,7 @@ class SummaryController extends Controller
         $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
             return $item->sortByDesc('date');
         });
-        // dd($summaries);
+
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {
             return [$status->id => ['color' => $status->color, 'name' => $status->name]];
