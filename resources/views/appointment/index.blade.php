@@ -25,6 +25,7 @@
                         <x-slot name="head">
                             <x-head>Date</x-head>
                             <x-head>Customer</x-head>
+                            <x-head>Company</x-head>
                             <x-head>Telephone</x-head>
                             <x-head>Tel Alt.</x-head>
                             <x-head>Mark Complete</x-head>
@@ -37,6 +38,9 @@
                                     </td>     
                                     <td class="px-6 py-4 whitespace-no-wrap">
                                         <div class="text-sm leading-5 text-gray-900">{{ $appointment->customer->name }}</div>
+                                    </td>     
+                                    <td class="px-6 py-4 whitespace-no-wrap">
+                                        <div class="text-sm leading-5 text-gray-900">{{ $appointment->customer->company_name }}</div>
                                     </td>     
                                     <td class="px-6 py-4 whitespace-no-wrap">
                                         <div class="text-sm leading-5 text-gray-900">{{ $appointment->customer->tel }}</div>

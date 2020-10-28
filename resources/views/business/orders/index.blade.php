@@ -8,7 +8,6 @@
                 </h2>
                 <div class="text-sm text-gray-500">{{ $business->name }}</div>
             </div>
-            <a class="btn btn-primary ml-auto items-center flex">Create Order</a>
         </div>
 
 
@@ -19,7 +18,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 {{-- orders --}}
                 <div class="my-6">
-                    <div class="block md-flex  mb-2">
+                    <div class="block md:flex mb-2 md:items-center">
                         <h4 class="text-xl text-gray-600 mb-2 pl-2">Orders for {{ $business->name }}</h4>
                         <div class="ml-auto">
                             <form class="flex flex-wrap md:space-x-2">
@@ -28,6 +27,10 @@
                                 <button class="btn btn-primary m-2 md:ml-0">Search</button>
                             </form>
                         </div>
+                    </div>
+                    <div class="ml-2 mb-2 block md:flex text-sm text-gray-600 space-x-4">
+                        <div class="">Total: £{{ $orders_total }}</div>
+                        <div class="">Average: £{{ $orders_average }}</div>
                     </div>
                     <x-table class="">
                         <x-slot name="head">

@@ -11,7 +11,7 @@ class AppointmentController extends Controller
     {
         $data = [
             'breadcrumbs_links' => ['Businesses' => route('business.index'), 'Appointments' => route('appointments.index')],
-            'appointments' => Appointment::where('complete', false)->get(),
+            'appointments' => Appointment::incomplete()->get(),
         ];
 
         return view('appointment.index', $data);
