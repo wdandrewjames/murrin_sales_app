@@ -12,6 +12,16 @@ class Appointment extends Model
 
     protected $guarded = ['id'];
 
+    public function scopeComplete($query)
+    {
+        return $query->where('complete', '=', true);
+    }
+    
+    public function scopeIncomplete($query)
+    {
+        return $query->where('complete', '=', false);
+    }
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);
