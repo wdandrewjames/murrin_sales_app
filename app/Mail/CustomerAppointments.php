@@ -30,7 +30,7 @@ class CustomerAppointments extends Mailable
      */
     public function build()
     {
-        return $this->from('mark@markmurrin.com')
+        return $this->from('markmurrin@mail.com')
                     ->subject('CRM Phone Appointments')
                     ->markdown('emails.appointments.reminder');
                     

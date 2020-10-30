@@ -83,7 +83,7 @@ class GenerateReport extends Command
                 'status' => $statusTable,
             ];
 
-            $pdf = \PDF::loadView('pdf', $data)->stream();
+            $pdf = PDF::loadView('pdf', $data)->stream();
             Mail::to('aj.rushton@icloud.com')->send(new \App\Mail\SendReport($pdf, $business));
         });
 
