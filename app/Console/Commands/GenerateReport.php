@@ -13,7 +13,7 @@ class GenerateReport extends Command
      *
      * @var string
      */
-    protected $signature = 'command:generate-report';
+    protected $signature = 'report:generate-report';
 
     /**
      * The console command description.
@@ -83,7 +83,7 @@ class GenerateReport extends Command
                 'status' => $statusTable,
             ];
 
-            $pdf = PDF::loadView('pdf', $data)->stream();
+            $pdf = \PDF::loadView('pdf', $data)->stream();
             Mail::to('aj.rushton@icloud.com')->send(new \App\Mail\SendReport($pdf, $business));
         });
 
