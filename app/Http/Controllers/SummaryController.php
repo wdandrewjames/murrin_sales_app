@@ -46,8 +46,6 @@ class SummaryController extends Controller
             return $item->sortByDesc('date');
         });
 
-        dd($summaries);
-
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {
             return [$status->id => ['color' => $status->color, 'name' => $status->name]];
