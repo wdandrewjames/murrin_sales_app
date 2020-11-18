@@ -54,6 +54,7 @@
 </head>
 
 <body>
+    <h3>Customer Status Summary</h3>
     <table id="customers">
         <thead>
             <tr>
@@ -84,6 +85,24 @@
                 </td>
                 @foreach ($dates as $date => $count)
                 <td class="px-6 py-4 bg-gray-100 whitespace-no-wrap">{{ $count }}</td>
+                @endforeach
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Monthly Orders Values</h3>
+    <table id="customers">
+        <thead>
+            <tr>
+                @foreach ($orders as $date => $amount)
+                    <x-head>{{ $date }}</x-head>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="font-bold">
+                @foreach ($orders as $date => $amount)
+                    <td class="px-6 py-4 whitespace-no-wrap">£{{ $amount }}</td>
                 @endforeach
             </tr>
         </tbody>

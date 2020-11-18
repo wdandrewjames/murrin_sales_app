@@ -15,7 +15,7 @@
                             <div class="grid grid-cols-1 xl:grid-cols-7">
                                 <div class="sm:pr-2 col-span-2">
                                     <h3 class="mb-2 font-normal text-xl tracking-wide text-gray-800">Creating a New
-                                        Appointemnt Call for {{ $customer->name }}</h3>
+                                        Appointment Call for {{ $customer->name }}</h3>
                                     <p class="font-light text-sm opacity-75 tracking-wide text-gray-800">Once the
                                         appointment has been created, you will be able to view the details on the customer's page and a notification email will be sent out each week.</p>
                                 </div>

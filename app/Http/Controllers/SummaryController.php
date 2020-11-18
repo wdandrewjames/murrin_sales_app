@@ -49,7 +49,32 @@ class SummaryController extends Controller
             return [$status->id => ['color' => $status->color, 'name' => $status->name]];
         });
 
+        // orders
+
+        // get the last 12 months starting from current month
+        $months = [];
+        for ($i=0; $i < 12; $i++) { 
+            $months[now()->subMonths($i)->format('M Y')] = 0;
+        }
+        
+        // get the orders grouped by month
+        $orders = $business->orders->sortByDesc('invoice_date')->groupBy(function($order) {
+            return \Carbon\Carbon::parse($order->invoice_date)->format('M Y');
+        });
+
+        
+        $orders = $orders->map(function($item, $key) {
+            return number_format($item->sum('amount') / 100, 2);
+        });
+
+        foreach ($months as $month => $amount) {
+            if (isset($orders[$month])) {
+                $months[$month] = $orders[$month];
+            }
+        }
+
         $data = [
+            'orders' => $months,
             'business' => $business,
             'dates' => $dates,
             'summaries' => $summaries,

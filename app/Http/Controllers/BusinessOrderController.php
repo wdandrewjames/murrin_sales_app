@@ -31,9 +31,9 @@ class BusinessOrderController extends Controller
 
         $data = [
             'business' => $business,
-            'orders' => $orders->paginate(10),
             'orders_total' => number_format(($orders->sum('amount') / 100)),
             'orders_average' => number_format(round(($orders->avg('amount') / 100), 2)),
+            'orders' => $orders->paginate(10),
         ];
 
         return view('business.orders.index', $data);

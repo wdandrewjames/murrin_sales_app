@@ -7,7 +7,7 @@
     </x-slot>
     <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <x-table>
@@ -38,6 +38,25 @@
                             </td>
                             @foreach ($dates as $date => $count)
                                 <td class="px-6 py-4 bg-gray-100 whitespace-no-wrap">{{ $count }}</td>
+                            @endforeach
+                        </x-row>
+                    </x-slot>
+                </x-table>
+            </div>
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            
+                <x-table>
+                    {{-- table headers looping through upto last 12-months --}}
+                    <x-slot name="head">
+                        @foreach ($orders as $date => $amount)
+                            <x-head>{{ $date }}</x-head>
+                        @endforeach
+                    </x-slot>
+
+                    <x-slot name="body">
+                        <x-row>
+                            @foreach ($orders as $date => $amount)
+                                <td class="px-6 py-4 whitespace-no-wrap">£{{ $amount }}</td>
                             @endforeach
                         </x-row>
                     </x-slot>

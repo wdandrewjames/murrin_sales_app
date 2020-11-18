@@ -75,15 +75,36 @@ class GenerateReport extends Command
             $summaries = $summaries->groupBy('status_id')->sort()->map(function ($item) {
                 return $item->sortByDesc('date');
             });
+
+            // get the last 12 months starting from current month
+            $months = [];
+            for ($i=0; $i < 12; $i++) { 
+                $months[now()->subMonths($i)->format('M Y')] = 0;
+            }
+
+            $orders = $business->orders->sortByDesc('invoice_date')->groupBy(function($order) {
+                return \Carbon\Carbon::parse($order->invoice_date)->format('M Y');
+            });
+    
+            
+            $orders = $orders->map(function($item, $key) {
+                return number_format($item->sum('amount') / 100, 2);
+            });
+    
+            foreach ($months as $month => $amount) {
+                if (isset($orders[$month])) {
+                    $months[$month] = $orders[$month];
+                }
+            }
     
             $data = [
-                'business' => $business,
+                'orders' => $months,
                 'dates' => $dates,
                 'summaries' => $summaries,
                 'status' => $statusTable,
             ];
 
-            $pdf = \PDF::loadView('pdf', $data)->stream();
+            $pdf = \PDF::loadView('pdf', $data)->setPaper('A4', 'landscape')->stream();
             Mail::to('aj.rushton@icloud.com')->send(new \App\Mail\SendReport($pdf, $business));
         });
 

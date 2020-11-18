@@ -45,13 +45,13 @@
                             @foreach ($orders as $order)
                                 <x-row>
                                     <td class="px-6 py-4 whitespace-no-wrap">
-                                        <div class="text-sm leading-5 text-gray-900">{{ $order->invoice_date }}</div>
+                                        <div class="text-sm leading-5 text-gray-900">{{ $order->invoice_date->format('d/m/Y') }}</div>
                                     </td>     
                                     <td class="px-6 py-4 whitespace-no-wrap">
                                         <div class="text-sm leading-5 text-gray-900">{{ $order->invoice_number }}</div>
                                     </td>     
                                     <td class="px-6 py-4 whitespace-no-wrap">
-                                        <div class="text-sm leading-5 text-gray-900">£{{ $order->amount }}</div>
+                                        <div class="text-sm leading-5 text-gray-900">£{{ $order->formatAmount }}</div>
                                     </td>     
                                     <td class="px-6 py-4 whitespace-no-wrap">
                                         <div class="text-sm leading-5 text-gray-900">{{ $order->customer->name }}</div>

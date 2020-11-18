@@ -13,15 +13,11 @@ class Order extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $dates = ['invoice_date'];
 
-    public function getInvoiceDateAttribute($value)
+    public function getFormatAmountAttribute()
     {
-        return date('d/m/Y', strtotime($value));
-    }
-
-    public function getAmountAttribute($value)
-    {
-        return number_format($value / 100, 2);
+        return number_format($this->amount / 100, 2);
     }
 
     public function setAmountAttribute($value)
