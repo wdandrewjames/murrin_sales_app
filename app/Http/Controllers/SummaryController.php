@@ -32,7 +32,9 @@ class SummaryController extends Controller
         ->sortByDesc('date');
         
         // get dates and totals
-        $dates = $summaries->groupBy('date')
+        $dates = $summaries->groupBy((function($summary) {;
+            return \Carbon\Carbon::parse($summary['date'])->format('M Y');
+        }))
         ->map(function($summary, $date) {
             return $summary->sum('count');
         })->mapWithKeys(function ($item, $date) {
@@ -43,6 +45,8 @@ class SummaryController extends Controller
         $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
             return $item->sortByDesc('date');
         });
+
+        dd($summaries);
 
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {
