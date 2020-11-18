@@ -14,7 +14,7 @@
                     {{-- table headers looping through upto last 12-months --}}
                     <x-slot name="head">
                         <x-head>Status</x-head>
-                        @foreach ($dates as $date => $count)
+                        @foreach ($dates as $date)
                             <x-head>{{ $date }}</x-head>
                         @endforeach
                     </x-slot>
@@ -26,8 +26,8 @@
                                     <div class="rounded-full h-4 w-4 border-{{ $status[$statusId]['color'] }}-800 mr-2 bg-{{ $status[$statusId]['color'] }}-500"></div>
                                     {{ $status[$statusId]['name'] }}
                                 </td>
-                                @foreach ($values as $count)
-                                    <td class="px-6 py-4 whitespace-no-wrap">{{ $count['count'] }}</td>
+                                @foreach ($values as $date => $count)
+                                    <td class="px-6 py-4 whitespace-no-wrap">{{ $count }}</td>
                                 @endforeach
                             </x-row>
                         @endforeach
@@ -36,7 +36,7 @@
                                 <div class="rounded-full h-4 w-4 mr-2 bg-white-500"></div>
                                 Total
                             </td>
-                            @foreach ($dates as $date => $count)
+                            @foreach ($totals as $date => $count)
                                 <td class="px-6 py-4 bg-gray-100 whitespace-no-wrap">{{ $count }}</td>
                             @endforeach
                         </x-row>

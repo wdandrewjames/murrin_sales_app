@@ -13,12 +13,13 @@ class SummaryController extends Controller
     {
         // get initial data
         // remove day from date so dates are grouped by month
-        $summaries = Summary::where([
+        $initialData = Summary::where([
             ['business_id', '=', $business->id],
             ['date', '>', now()->subYear()],
-        ])
-        ->get()
-        ->map(function($item, $key) {
+        ])->get();
+        
+        $summaries = $initialData->map(function($item, $key) {
+            
             $date = new \DateTime($item->date); 
             
             return [
@@ -29,22 +30,63 @@ class SummaryController extends Controller
                 'date' => $date->format( 'Y-m' ),
             ];
         })
-        ->sortByDesc('date');
-        
-        // get dates and totals
-        $dates = $summaries->groupBy((function($summary) {;
-            return \Carbon\Carbon::parse($summary['date'])->format('M Y');
-        }))
-        ->map(function($summary, $date) {
-            return $summary->sum('count');
-        })->mapWithKeys(function ($item, $date) {
-            return [date('M Y', strtotime($date)) => $item];
+
+        ->groupBy((function($summary) {;
+            return $summary['status_id'];
+        }));
+
+        $dates = [];
+
+
+        foreach ($summaries as $key => $value) {
+            $summaries[$key] = $value->groupBy('date');
+            foreach ($summaries[$key] as $date => $summary) {
+                $summaries[$key][$date] = $summary->sum('count');
+                $date = \Carbon\Carbon::parse($date . '-01')->format('M Y');
+                if (!in_array($date, $dates)) {
+                    $dates[] = $date;
+                }
+            }
+        }
+
+        // dd($dates);
+
+        $totals = $initialData->groupBy(function($value) {
+            return \Carbon\Carbon::parse($value->date)->format('M Y');
+
+        })->map(function($values, $date) {
+            return $values->sum('count');
         });
 
+        
+
+        // dd($dates);
+        // dd($summaries);
+
+        // get dates and totals
+        // $dates = $summaries->groupBy((function($summary) {;
+        //     return \Carbon\Carbon::parse($summary['date'])->format('M Y');
+        // }));
+
+        // dd('test');
+        // ->map(function($summary, $date) {
+        //     return $summary->sum('count');
+        // })->mapWithKeys(function ($item, $date) {
+        //     return [date('M Y', strtotime($date)) => $item];
+        // });
+
+        // dd('test');
+
         // get summary data grouped by status for looping through table rows
-        $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
-            return $item->sortByDesc('date');
-        });
+        // $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
+        //     return $item->sortByDesc('date');
+        // });
+
+        // $summaries2 = $summaries->groupBy('status_id')->sort()->map(function($item) {
+        //     return $item->sortByDesc('date');
+        // });
+
+        // dd($summaries);
 
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {
@@ -81,6 +123,7 @@ class SummaryController extends Controller
             'dates' => $dates,
             'summaries' => $summaries,
             'status' => $statusTable,
+            'totals' => $totals,
             'breadcrumbs_links' => [
                 'Businesses' => route('business.index'), 
                 $business->name => route('business.show', $business),
