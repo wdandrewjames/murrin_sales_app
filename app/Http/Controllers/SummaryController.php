@@ -49,44 +49,12 @@ class SummaryController extends Controller
             }
         }
 
-        // dd($dates);
-
         $totals = $initialData->groupBy(function($value) {
             return \Carbon\Carbon::parse($value->date)->format('M Y');
 
         })->map(function($values, $date) {
             return $values->sum('count');
         });
-
-        
-
-        // dd($dates);
-        // dd($summaries);
-
-        // get dates and totals
-        // $dates = $summaries->groupBy((function($summary) {;
-        //     return \Carbon\Carbon::parse($summary['date'])->format('M Y');
-        // }));
-
-        // dd('test');
-        // ->map(function($summary, $date) {
-        //     return $summary->sum('count');
-        // })->mapWithKeys(function ($item, $date) {
-        //     return [date('M Y', strtotime($date)) => $item];
-        // });
-
-        // dd('test');
-
-        // get summary data grouped by status for looping through table rows
-        // $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
-        //     return $item->sortByDesc('date');
-        // });
-
-        // $summaries2 = $summaries->groupBy('status_id')->sort()->map(function($item) {
-        //     return $item->sortByDesc('date');
-        // });
-
-        // dd($summaries);
 
         // status lookup table to rewference name and colors
         $statusTable = Status::all()->mapWithKeys(function($status, $key) {

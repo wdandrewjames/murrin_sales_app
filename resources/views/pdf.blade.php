@@ -59,7 +59,7 @@
         <thead>
             <tr>
                 <th>Status</th>
-                @foreach ($dates as $date => $count)
+                @foreach ($dates as $date)
                 <th>{{ $date }}</th>
                 @endforeach
             </tr>
@@ -73,8 +73,8 @@
                     </div>
                     {{ $status[$statusId]['name'] }}
                 </td>
-                @foreach ($values as $count)
-                <td class="px-6 py-4 whitespace-no-wrap">{{ $count['count'] }}</td>
+                @foreach ($values as $date => $count)
+                <td class="px-6 py-4 whitespace-no-wrap">{{ $count }}</td>
                 @endforeach
             </tr>
             @endforeach
@@ -83,7 +83,7 @@
                     <div class="rounded-full h-4 w-4 mr-2 bg-white-500"></div>
                     Total
                 </td>
-                @foreach ($dates as $date => $count)
+                @foreach ($totals as $date => $count)
                 <td class="px-6 py-4 bg-gray-100 whitespace-no-wrap">{{ $count }}</td>
                 @endforeach
             </tr>

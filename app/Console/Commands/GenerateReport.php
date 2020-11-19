@@ -45,36 +45,49 @@ class GenerateReport extends Command
         });
 
         Models\Business::all()->each(function($business) use($statusTable) {
-            $summaries = Models\Summary::where([
+            // get initial data
+            // remove day from date so dates are grouped by month
+            $initialData = Models\Summary::where([
                 ['business_id', '=', $business->id],
                 ['date', '>', now()->subYear()],
-            ])
-                ->get()
-                ->map(function ($item, $key) {
-                    $date = new \DateTime($item->date);
+            ])->get();
+            $summaries = $initialData->map(function($item, $key) {
+            
+                $date = new \DateTime($item->date); 
+                
+                return [
+                    'id' => $item->id,
+                    'business_id' => $item->business_id,
+                    'status_id' => $item->status_id,
+                    'count' => $item->count,
+                    'date' => $date->format( 'Y-m' ),
+                ];
+            })
     
-                    return [
-                        'id' => $item->id,
-                        'business_id' => $item->business_id,
-                        'status_id' => $item->status_id,
-                        'count' => $item->count,
-                        'date' => $date->format('Y-m'),
-                    ];
-                })
-                ->sortByDesc('date');
+            ->groupBy((function($summary) {;
+                return $summary['status_id'];
+            }));
     
-            // get dates and totals
-            $dates = $summaries->groupBy('date')
-                ->map(function ($summary, $date) {
-                    return $summary->sum('count');
-                })->mapWithKeys(function ($item, $date) {
-                    return [date('M Y', strtotime($date)) => $item];
-                });
-    
-            // get summary data grouped by status for looping through table rows
-            $summaries = $summaries->groupBy('status_id')->sort()->map(function ($item) {
-                return $item->sortByDesc('date');
-            });
+            $dates = [];
+
+
+        foreach ($summaries as $key => $value) {
+            $summaries[$key] = $value->groupBy('date');
+            foreach ($summaries[$key] as $date => $summary) {
+                $summaries[$key][$date] = $summary->sum('count');
+                $date = \Carbon\Carbon::parse($date . '-01')->format('M Y');
+                if (!in_array($date, $dates)) {
+                    $dates[] = $date;
+                }
+            }
+        }
+
+        $totals = $initialData->groupBy(function($value) {
+            return \Carbon\Carbon::parse($value->date)->format('M Y');
+
+        })->map(function($values, $date) {
+            return $values->sum('count');
+        });
 
             // get the last 12 months starting from current month
             $months = [];
@@ -102,6 +115,7 @@ class GenerateReport extends Command
                 'dates' => $dates,
                 'summaries' => $summaries,
                 'status' => $statusTable,
+                'totals' => $totals
             ];
 
             $pdf = \PDF::loadView('pdf', $data)->setPaper('A4', 'landscape')->stream();
