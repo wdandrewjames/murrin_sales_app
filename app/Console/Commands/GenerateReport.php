@@ -119,7 +119,7 @@ class GenerateReport extends Command
             ];
 
             $pdf = \PDF::loadView('pdf', $data)->setPaper('A4', 'landscape')->stream();
-            Mail::to('aj.rushton@icloud.com')->send(new \App\Mail\SendReport($pdf, $business));
+            Mail::to($business->email)->send(new \App\Mail\SendReport($pdf, $business));
         });
 
     }

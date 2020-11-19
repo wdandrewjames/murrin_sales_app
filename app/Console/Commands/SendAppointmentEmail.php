@@ -40,7 +40,9 @@ class SendAppointmentEmail extends Command
      */
     public function handle()
     {
-        $appointments = Appointment::where('complete', 0)->get();
+        $appointments = Appointment::where('complete', 0)
+            ->where('start', '<=', now()->addWeek())
+            ->get();
         Mail::to('markmurrin@mail.com')->send(new CustomerAppointments($appointments));
     }
 }
