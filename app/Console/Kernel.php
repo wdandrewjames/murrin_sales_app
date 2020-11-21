@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('send_appointment:email')->weeklyOn(5, '08:00');
         $schedule->command('summary:create')->weeklyOn(6, '12:30');
-        $schedule->command('report:generate-report')->weeklyOn(5, '17:32');
+        $schedule->command('report:generate-report')->weeklyOn(6, '12:42');
     }
 
     /**
