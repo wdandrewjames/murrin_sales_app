@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Business;
-use App\Models\Status;
 use App\Models\Summary as SummaryModel;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class Summary extends Command
 {
@@ -41,7 +41,12 @@ class Summary extends Command
     public function handle()
     {
         $statusIds = \App\Models\Status::all()->pluck('id');
+
+        // delete all current month as to not duplicate data - Mark requested weekly after monthly was programmed in
+        DB::table('summaries')->whereBetween('date', [now()->firstOfMonth(), now()->lastOfMonth()])->delete();
+
         foreach (Business::all() as $business) {
+            
             $counts = $business->customers->countBy('status_id');
 
             foreach ($statusIds as $status) {
@@ -49,7 +54,9 @@ class Summary extends Command
                     $counts[$status] = 0;
                 }
             }
+
             $counts = $counts->sortKeys();
+
             foreach ($counts as $status => $count) {
                 SummaryModel::create([
                     'business_id' => $business->id,
