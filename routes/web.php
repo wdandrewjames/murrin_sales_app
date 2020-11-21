@@ -7,9 +7,13 @@ use App\Http\Controllers\CustomerAppointmentsController;
 use App\Http\Controllers\CustomerNoteController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerOrderController;
+use App\Http\Controllers\ManualUserController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\SummaryController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Business;
+use App\Models\Customer;
+use App\Models\Summary;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,28 +87,28 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 // businesses
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/businesses', [BusinessController::class, 'index'])->name('business.index');
-    Route::get('/businesses/create', [BusinessController::class, 'create'])->name('business.create');
-    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('business.edit');
-    Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('business.show');
-    Route::post('/businesses', [BusinessController::class, 'store'])->name('business.store');
-    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('business.update');
-    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('business.destroy');
+    Route::get('/businesses', [BusinessController::class, 'index'])->middleware('check_business')->name('business.index');
+    Route::get('/businesses/create', [BusinessController::class, 'create'])->middleware('can:create,business')->name('business.create');
+    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->middleware('can:edit,business')->name('business.edit');
+    Route::get('/businesses/{business}', [BusinessController::class, 'show'])->middleware('can:view,business')->name('business.show');
+    Route::post('/businesses', [BusinessController::class, 'store'])->middleware('can:create,business')->name('business.store');
+    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->middleware('can:edit,business')->name('business.update');
+    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->middleware('can:delete,business')->name('business.destroy');
 });
 
 // customers
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/businesses/{business}/customers', [CustomerController::class, 'index'])->name('customer.index');
-    Route::get('/businesses/{business}/customers/create', [CustomerController::class, 'create'])->name('customer.create');
-    Route::post('/businesses/{business}/customers', [CustomerController::class, 'store'])->name('customer.store');
-    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
-    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
-    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+    Route::get('/businesses/{business}/customers', [CustomerController::class, 'index'])->middleware('can:view,business')->name('customer.index');
+    Route::get('/businesses/{business}/customers/create', [CustomerController::class, 'create'])->middleware('can:create,customer')->name('customer.create');
+    Route::post('/businesses/{business}/customers', [CustomerController::class, 'store'])->middleware('can:create,customer')->name('customer.store');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('can:view,customer')->name('customer.show');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->middleware('can:edit,customer')->name('customer.edit');
+    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->middleware('can:edit,customer')->name('customer.update');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->middleware('can:delete,customer')->name('customer.destroy');
 });
 
 // summary
-Route::middleware(['auth:sanctum', 'verified'])->get('/summary/{business}', [SummaryController::class, 'index'])->name('summary.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/businesses/{business}/summary', [SummaryController::class, 'index'])->name('summary.index');
 
 // status
 Route::middleware(['auth:sanctum', 'verified'])->put('/status/{customer}', [StatusController::class, 'update'])->name('status.update');
@@ -128,3 +132,6 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/customers/{customer}/app
 // customer notes
 Route::middleware(['auth:sanctum', 'verified'])->get('/customers/{customer}/notes', [CustomerNoteController::class, 'index'])->name('customers.note.index');
 Route::middleware(['auth:sanctum', 'verified'])->post('/customers/{customer}/notes', [CustomerNoteController::class, 'store'])->name('customers.note.store');
+
+//Manual user creation
+Route::middleware(['auth:sanctum', 'verified'])->post('/createuser', [ManualUserController::class, 'store'])->name('manual_user.store');

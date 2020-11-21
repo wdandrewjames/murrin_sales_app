@@ -13,24 +13,25 @@
                 {{ $customer->status->name }}</div>
         </div>
 
-
     </x-slot>
     <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
     <div class="py-4">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex flex-col">
+            @if (Auth::user()->business_id == null)
             <div class="flex items-center flex-wrap rounded-lg bg-white shadow-lg md:shadow mt-2 p-3 mb-4">
-                <div class="">
-                    <form action="{{ route('status.update', $customer) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <select class="py-2" name="status_id" id="status_id">
-                            @foreach ($statuses as $status)
-                                <option {{ $customer->status->id == $status->id ? 'selected' : '' }} value="{{ $status->id }}" class="">{{ $status->name }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
+                    <div class="">
+                        <form action="{{ route('status.update', $customer) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <select class="py-2" name="status_id" id="status_id">
+                                @foreach ($statuses as $status)
+                                    <option {{ $customer->status->id == $status->id ? 'selected' : '' }} value="{{ $status->id }}" class="">{{ $status->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
+                
 
                 
                 <div class="hidden md:flex ml-2 mt-2 sm:mt-0 md:ml-auto items-center justify-center ">
@@ -47,6 +48,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg lg:p-6">
                 {{-- orders --}}
                 <div class="my-6">

@@ -26,7 +26,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
+        'business_id',
     ];
 
     /**
@@ -58,6 +60,11 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function isAdmin()
+    {
+        return $this->business_id == null;
+    }
 
     public function orders()
     {
