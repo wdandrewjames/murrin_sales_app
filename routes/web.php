@@ -30,81 +30,30 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     return redirect()->route('business.index');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/pdf', function () {
-    $business = App\Models\Business::find(1);
-    $summaries = App\Models\Summary::where([
-        ['business_id', '=', $business->id],
-        ['date', '>', now()->subYear()],
-    ])
-    ->get()
-    ->map(function($item, $key) {
-        $date = new \DateTime($item->date); 
-        
-        return [
-            'id' => $item->id,
-            'business_id' => $item->business_id,
-            'status_id' => $item->status_id,
-            'count' => $item->count,
-            'date' => $date->format( 'Y-m' ),
-        ];
-    })
-    ->sortByDesc('date');
-    
-    // get dates and totals
-    $dates = $summaries->groupBy('date')
-    ->map(function($summary, $date) {
-        return $summary->sum('count');
-    })->mapWithKeys(function ($item, $date) {
-        return [date('M Y', strtotime($date)) => $item];
-    });
-
-    // get summary data grouped by status for looping through table rows
-    $summaries = $summaries->groupBy('status_id')->sort()->map(function($item) {
-        return $item->sortByDesc('date');
-    });
-
-    // status lookup table to rewference name and colors
-    $statusTable = App\Models\Status::all()->mapWithKeys(function($status, $key) {
-        return [$status->id => ['color' => $status->color, 'name' => $status->name]];
-    });
-
-    $data = [
-        'business' => $business,
-        'dates' => $dates,
-        'summaries' => $summaries,
-        'status' => $statusTable,
-    ];
-
-    $pdf = PDF::loadView('pdf', $data);
-
-    return $pdf->stream();
-    return view('pdf');
-})->name('pdf');
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
 // businesses
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/businesses', [BusinessController::class, 'index'])->middleware('check_business')->name('business.index');
-    Route::get('/businesses/create', [BusinessController::class, 'create'])->middleware('can:create,business')->name('business.create');
-    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->middleware('can:edit,business')->name('business.edit');
-    Route::get('/businesses/{business}', [BusinessController::class, 'show'])->middleware('can:view,business')->name('business.show');
-    Route::post('/businesses', [BusinessController::class, 'store'])->middleware('can:create,business')->name('business.store');
-    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->middleware('can:edit,business')->name('business.update');
-    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->middleware('can:delete,business')->name('business.destroy');
+    Route::get('/businesses', [BusinessController::class, 'index'])->name('business.index');
+    Route::get('/businesses/create', [BusinessController::class, 'create'])->name('business.create');
+    Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('business.edit');
+    Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('business.show');
+    Route::post('/businesses', [BusinessController::class, 'store'])->name('business.store');
+    Route::put('/businesses/{business}', [BusinessController::class, 'update'])->name('business.update');
+    Route::delete('/businesses/{business}', [BusinessController::class, 'destroy'])->name('business.destroy');
 });
 
 // customers
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/businesses/{business}/customers', [CustomerController::class, 'index'])->middleware('can:view,business')->name('customer.index');
-    Route::get('/businesses/{business}/customers/create', [CustomerController::class, 'create'])->middleware('can:create,customer')->name('customer.create');
-    Route::post('/businesses/{business}/customers', [CustomerController::class, 'store'])->middleware('can:create,customer')->name('customer.store');
-    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('can:view,customer')->name('customer.show');
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->middleware('can:edit,customer')->name('customer.edit');
-    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->middleware('can:edit,customer')->name('customer.update');
-    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->middleware('can:delete,customer')->name('customer.destroy');
+    Route::get('/businesses/{business}/customers', [CustomerController::class, 'index'])->name('customer.index');
+    Route::get('/businesses/{business}/customers/create', [CustomerController::class, 'create'])->name('customer.create');
+    Route::post('/businesses/{business}/customers', [CustomerController::class, 'store'])->name('customer.store');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 });
 
 // summary

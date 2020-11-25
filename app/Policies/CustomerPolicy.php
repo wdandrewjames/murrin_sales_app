@@ -30,6 +30,7 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer)
     {
+        dd('test');
         return $user->business_id == $customer->business->id || $user->isAdmin();
     }
 
