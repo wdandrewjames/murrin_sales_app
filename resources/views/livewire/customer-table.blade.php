@@ -1,4 +1,5 @@
 <div class="space-y-4">
+    :: {{Auth::user()->business_id}}
     <input wire:model="search" type="text" name="search" id="search" class="px-2 my-4 border rounded-full" placeholder="Search...">
     <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
         <x-table>
