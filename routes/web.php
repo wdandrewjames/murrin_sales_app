@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 // businesses
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/businesses', [BusinessController::class, 'index'])->name('business.index');
+    Route::get('/businesses', [BusinessController::class, 'index'])->middleware(['check_business', 'can:viewAny,business'])->name('business.index');
     Route::get('/businesses/create', [BusinessController::class, 'create'])->name('business.create');
     Route::get('/businesses/{business}/edit', [BusinessController::class, 'edit'])->name('business.edit');
     Route::get('/businesses/{business}', [BusinessController::class, 'show'])->name('business.show');

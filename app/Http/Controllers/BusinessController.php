@@ -70,4 +70,10 @@ class BusinessController extends Controller
 
         return Redirect()->route('business.show', $business->id);
     }
+
+    public function destroy(Business $business)
+    {
+        $business->delete();
+        return back();
+    }
 }

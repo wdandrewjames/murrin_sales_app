@@ -55,7 +55,11 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer)
     {
-        return view('customer.edit', ['customer' => $customer]);
+        $data = [
+            'customer' => $customer,
+            'breadcrumbs_links' => ['Businesses' => route('business.index'), $customer->business->name => route('business.show', $customer->business), 'Edit Customer' => route('customer.edit', $customer)],
+        ];
+        return view('customer.edit', $data);
     }
 
     public function update(Customer $customer)
@@ -75,5 +79,11 @@ class CustomerController extends Controller
         ]));
 
         return redirect()->route('customer.show', $customer->id);;
+    }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return back();
     }
 }
