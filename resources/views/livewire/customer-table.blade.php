@@ -8,7 +8,7 @@
                 <x-head>Website</x-head>
                 <x-head>Tel</x-head>
                 <x-head>Status</x-head>
-                @if (Auth::user()->business_id == null)
+                @if (! Auth::user()->business_id)
                 <x-head>Edit</x-head>
                 <x-head>Delete</x-head>
                 @endif
