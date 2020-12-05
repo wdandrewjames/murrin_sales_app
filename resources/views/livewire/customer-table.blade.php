@@ -8,7 +8,7 @@
                 <x-head>Website</x-head>
                 <x-head>Tel</x-head>
                 <x-head>Status</x-head>
-                @if (! Auth::user()->business_id)
+                @if (Auth::user()->business_id === null)
                 <x-head>Edit</x-head>
                 <x-head>Delete</x-head>
                 @endif
@@ -25,7 +25,7 @@
                                 {{ $customer->status->name }}
                             </span>
                         </td>
-                        @if (Auth::user()->business_id == null)
+                        @if (Auth::user()->business_id === null)
                         <td class="px-6 py-4 whitespace-no-wrap">
                             <a href="{{ route('customer.edit', $customer) }}">Edit</a>
                         </td>
