@@ -78,7 +78,7 @@ class CustomerController extends Controller
             'post_code' => ['nullable'],
         ]));
 
-        return redirect()->route('customer.show', $customer->id);;
+        return redirect()->route('customer.show', $customer->id);
     }
 
     public function destroy(Customer $customer)

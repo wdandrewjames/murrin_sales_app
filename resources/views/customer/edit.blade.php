@@ -20,7 +20,7 @@
                                 </div>
 
                                 <div class="col-span-1 pt-4 lg:pt-0 lg:pl-4 lg:col-span-5">
-                                    <form action="{{ route('customer.update', $customer->business) }}" method="POST">
+                                    <form action="{{ route('customer.update', $customer->id) }}" method="POST">
                                         @method('PUT')
                                         @csrf
                                         <div class="col-span-1 pt-4 lg:pt-0 lg:pl-4 lg:col-span-2">
