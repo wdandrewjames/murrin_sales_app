@@ -11,6 +11,6 @@ class CustomerTable extends Component
 
     public function render()
     {
-        return view('livewire.customer-table', ['customers' => $this->business->customers()->search('name', $this->search)->orderBy('name')->paginate(10)]);
+        return view('livewire.customer-table', ['customers' => $this->business->customers()->search('company_name', $this->search)->orderBy('company_name')->paginate(10)]);
     }
 }
