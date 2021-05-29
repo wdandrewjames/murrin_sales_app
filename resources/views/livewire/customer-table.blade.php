@@ -4,6 +4,7 @@
     <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
         <x-table>
             <x-slot name="head">
+                <x-head>Company</x-head>
                 <x-head x-on:click="open = !open">Name</x-head>
                 <x-head>Email</x-head>
                 <x-head>Website</x-head>
@@ -17,6 +18,7 @@
             <x-slot name="body">
                 @foreach ($customers as $customer)
                     <x-row>
+                        <td class="px-6 py-4 whitespace-no-wrap"><a href="{{ route('customer.show', $customer->id) }}">{{ $customer->company_name }}</a></td>
                         <td class="px-6 py-4 whitespace-no-wrap"><a href="{{ route('customer.show', $customer->id) }}">{{ $customer->name }}</a></td>
                         <td class="px-6 py-4 whitespace-no-wrap">{{ $customer->email }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap">{{ $customer->website }}</td>
