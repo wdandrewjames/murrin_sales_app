@@ -7,8 +7,14 @@
     </x-slot>
     <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
-            
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4 bg-white rounded-lg py-6">
+            {{-- nav --}}
+            <div class="flex border-b font-bold text-gray-500 w-full tracking-wide">
+                <a href="{{ route('business.show', $business) }}" class="mx-3 {{ request()->routeIs('business.show', $business) ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Customers</a >
+                <a href="{{ route('business.order.index', $business) }}" class="mx-3 {{ request()->routeIs('business.order.index') ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Orders</a>
+                <a href="{{ route('summary.index', $business) }}" class="mx-3 {{ request()->routeIs('summary.index') ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Summary</a>
+                <a class="ml-auto mx-3">Action</a>
+            </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <x-table>
                     {{-- table headers looping through upto last 12-months --}}

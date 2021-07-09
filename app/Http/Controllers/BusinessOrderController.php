@@ -34,6 +34,7 @@ class BusinessOrderController extends Controller
             'orders_total' => number_format(($orders->sum('amount') / 100)),
             'orders_average' => number_format(round(($orders->avg('amount') / 100), 2)),
             'orders' => $orders->paginate(10),
+            'breadcrumbs_links' => ['Businesses' => route('business.index'), $business->name => route('business.show', $business), 'Orders' => route('customer.edit', $business)],
         ];
 
         return view('business.orders.index', $data);

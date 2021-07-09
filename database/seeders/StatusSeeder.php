@@ -39,7 +39,7 @@ class StatusSeeder extends Seeder
             [
                 'name' => 'Prospect',
                 'description' => 'The customer has been contacted and is interested in making a purchase',
-                'color' => 'orange',
+                'color' => 'yellow',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

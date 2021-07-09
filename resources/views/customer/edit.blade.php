@@ -14,9 +14,8 @@
                         <div class="flex flex-col px-5 py-6">
                             <div class="grid grid-cols-1 xl:grid-cols-7">
                                 <div class="col-span-2 sm:pr-2">
-                                    <h3 class="mb-2 text-xl font-normal tracking-wide text-gray-800">Editing a New
-                                        Customer</h3>
-                                    <p class="text-sm font-light tracking-wide text-gray-800 opacity-75">Editing customer information for {{ $customer->name }} from {{ $customer->business->name }}</p>
+                                    <h3 class="mb-2 text-xl font-normal tracking-wide text-gray-800">Edit CustomerInformation</h3>
+                                    <p class="text-sm font-light tracking-wide text-gray-800 opacity-75">Editing customer information for {{ $customer->company_name }} from {{ $customer->business->name }}</p>
                                 </div>
 
                                 <div class="col-span-1 pt-4 lg:pt-0 lg:pl-4 lg:col-span-5">

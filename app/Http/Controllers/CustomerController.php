@@ -13,6 +13,7 @@ class CustomerController extends Controller
     {
         $data = [
             'customer' => $customer,
+            'business' => $customer->business,
             'orders' => $customer->orders()->orderBy('invoice_date', 'desc')->paginate(10),
             'statuses' => Status::all('id', 'name'),
             'breadcrumbs_links' => ['Businesses' => route('business.index'), $customer->business->name => route('business.show', $customer->business), $customer->name => route('customer.show', $customer)],

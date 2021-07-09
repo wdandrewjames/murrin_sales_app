@@ -6,16 +6,25 @@
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Orders
                 </h2>
-                <div class="text-sm text-gray-500">{{ $business->name }}</div>
             </div>
         </div>
 
-
     </x-slot>
 
+    <x-breadcrumb :links="$breadcrumbs_links"></x-breadcrumb>
+
     <div class="py-4">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-white rounded-lg py-6">
+
+            {{-- nav --}}
+            <div class="flex border-b font-bold text-gray-500 w-full tracking-wide">
+                <a href="{{ route('business.show', $business) }}" class="mx-3 {{ request()->routeIs('business.show', $business) ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Customers</a >
+                <a href="{{ route('business.order.index', $business) }}" class="mx-3 {{ request()->routeIs('business.order.index') ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Orders</a>
+                <a href="{{ route('summary.index', $business) }}" class="mx-3 {{ request()->routeIs('summary.index') ? 'text-indigo-600 font-bolder border-b-2 border-indigo-600' : ''}}">Summary</a>
+                <a class="ml-auto mx-3">Action</a>
+            </div>
+
+            <div class="overflow-hidden">
                 {{-- orders --}}
                 <div class="my-6">
                     <div class="block mb-2 md:flex md:items-center">

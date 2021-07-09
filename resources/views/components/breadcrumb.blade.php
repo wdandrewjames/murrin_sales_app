@@ -1,4 +1,4 @@
-<nav class="text-black font-bold mt-2 md:mt-4 mb-2 max-w-7xl mx-auto py-2 md:py-6 px-4 sm:px-6 lg:px-8 text-sm" aria-label="Breadcrumb">
+<nav class="text-black font-bold my-2 md:mt-4 max-w-7xl mx-auto py-2 md:py-2 px-4 sm:px-6 lg:px-8 text-sm" aria-label="Breadcrumb">
     <ol class="list-none p-0 inline-flex">
         @foreach($links as $name => $link)
         @if (! $loop->last)
